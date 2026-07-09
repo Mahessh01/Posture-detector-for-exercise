@@ -1,87 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pose Detector</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <!-- p5.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    <title>AI Fitness Trainer</title>
 
-    <!-- ml5.js -->
-    <script src="https://unpkg.com/ml5@0.6.0/dist/ml5.min.js"></script>
+    <link rel="stylesheet"
+          href="css/style.css">
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
-
-        body{
-            background:#0d0d0d;
-            color:white;
-            font-family:Arial, Helvetica, sans-serif;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            min-height:100vh;
-        }
-
-        .container{
-            width:100%;
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-        }
-
-        h1{
-            font-size:52px;
-            letter-spacing:3px;
-            margin-bottom:35px;
-            color:white;
-        }
-
-        #canvas-container{
-            width:760px;
-            height:570px;
-            border:5px solid #8a2be2;
-            border-radius:25px;
-            overflow:hidden;
-            box-shadow:0 0 30px rgba(138,43,226,.5);
-        }
-
-        canvas{
-            display:block;
-        }
-
-        .info{
-            margin-top:25px;
-            padding:15px 30px;
-            border:2px solid #444;
-            border-radius:15px;
-            color:#ddd;
-            font-size:22px;
-            background:#1a1a1a;
-        }
-    </style>
 </head>
 
 <body>
 
-<div class="container">
+    <div class="background"></div>
 
-    <h1>POSE DETECTOR</h1>
+    <div class="container">
 
-    <div id="canvas-container"></div>
+        <header>
 
-    <div class="info">
-        Ensure your full body is visible in the frame
+            <h1>AI Fitness Trainer</h1>
+
+            <p>
+                Improve your workout with real-time AI posture correction.
+            </p>
+
+        </header>
+
+        <section class="exercise-grid">
+
+            <div class="exercise-card"
+                 data-exercise="bicep">
+
+                <div class="emoji">
+                    💪
+                </div>
+
+                <h2>Bicep Curl</h2>
+
+                <p>
+                    Count reps and detect bad curling form.
+                </p>
+
+            </div>
+
+            <div class="exercise-card"
+                 data-exercise="squat">
+
+                <div class="emoji">
+                    🏋️
+                </div>
+
+                <h2>Squat</h2>
+
+                <p>
+                    Improve depth and knee alignment.
+                </p>
+
+            </div>
+
+            <div class="exercise-card"
+                 data-exercise="pushup">
+
+                <div class="emoji">
+                    🤸
+                </div>
+
+                <h2>Push Up</h2>
+
+                <p>
+                    Detect complete push-up repetitions.
+                </p>
+
+            </div>
+
+            <div class="exercise-card"
+                 data-exercise="plank">
+
+                <div class="emoji">
+                    🧘
+                </div>
+
+                <h2>Plank</h2>
+
+                <p>
+                    Keep your body straight and stable.
+                </p>
+
+            </div>
+
+            <div class="exercise-card"
+                 data-exercise="shoulderpress">
+
+                <div class="emoji">
+                    🏋️‍♂️
+                </div>
+
+                <h2>Shoulder Press</h2>
+
+                <p>
+                    Improve shoulder press technique.
+                </p>
+
+            </div>
+
+        </section>
+
+        <button
+            id="startWorkout"
+            disabled>
+
+            Select an Exercise
+
+        </button>
+
     </div>
 
-</div>
+    <script>
 
-<script src="sketch.js"></script>
+        const cards =
+            document.querySelectorAll(".exercise-card");
+
+        const button =
+            document.getElementById("startWorkout");
+
+        let selectedExercise = "";
+
+        cards.forEach(card => {
+
+            card.addEventListener("click", () => {
+
+                cards.forEach(c =>
+                    c.classList.remove("selected"));
+
+                card.classList.add("selected");
+
+                selectedExercise =
+                    card.dataset.exercise;
+
+                button.disabled = false;
+
+                button.innerText =
+                    "Start " +
+                    card.querySelector("h2").innerText;
+
+            });
+
+        });
+
+        button.addEventListener("click", () => {
+
+            localStorage.setItem(
+                "selectedExercise",
+                selectedExercise
+            );
+
+            window.location.href =
+                "workout.html";
+
+        });
+
+    </script>
 
 </body>
+
 </html>
